@@ -1,10 +1,13 @@
 const express = require("express");
 const app = express();
 
-app.get("/", (req, res) => {
-  res.json({ response: "it is working" });
-});
+const PORT = process.env.PORT || 5000;
 
-app.listen(5000, () => {
-  console.log("Listening to port ");
+app.use(express.json());
+
+// login
+app.use("/", require("./routes/login"));
+
+app.listen(PORT, () => {
+  console.log(`Listening to port ${PORT}`);
 });
