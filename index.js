@@ -2,6 +2,7 @@ const express = require("express");
 const app = express();
 const morgan = require("morgan");
 const cors = require("cors");
+const bodyParser = require("body-parser");
 
 const PORT = process.env.PORT || 5000;
 
@@ -15,14 +16,14 @@ const corsSettings = {
 };
 
 // handlers
-app.use(express.json());
+app.use(bodyParser.json());
 app.use(morgan("dev"));
 app.use(cors(corsSettings));
 
 // login
-app.use("/login", require("./routes/login"));
+app.use("/login", require("./routes/no-auth/login"));
 // register
-app.use("/register", require("./routes/register"));
+app.use("/register", require("./routes/no-auth/register"));
 
 app.listen(PORT, () => {
   console.log(`Listening to port ${PORT}`);

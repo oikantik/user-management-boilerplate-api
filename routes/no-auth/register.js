@@ -1,9 +1,10 @@
 const express = require("express");
 const router = express.Router();
-const User = require("../models/User");
+
+const User = require("../../models/User");
 
 router.get("/", (req, res) => {
-  res.json({ response: "it is working" });
+  res.json({ response: "welcome to registration page" });
 });
 
 router.post("/", async (req, res) => {
@@ -15,6 +16,8 @@ router.post("/", async (req, res) => {
       password,
       dob,
       gender,
+      provider: "local-jwt",
+      providerID: "",
     });
     const response = await user.save();
     res.status(200).json({ success: true, id: response.id });
