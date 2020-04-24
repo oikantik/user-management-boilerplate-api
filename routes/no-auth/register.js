@@ -4,7 +4,10 @@ const router = express.Router();
 const User = require("../../models/User");
 
 router.get("/", (req, res) => {
-  res.json({ response: "welcome to registration page" });
+  res.json({
+    success: true,
+    message: "Welcome to the registration page",
+  });
 });
 
 router.post("/", async (req, res) => {
@@ -20,10 +23,19 @@ router.post("/", async (req, res) => {
       providerID: "",
     });
     const response = await user.save();
-    res.status(200).json({ success: true, id: response.id });
+    res.status(200).json({
+      success: true,
+      message: "Registration Successful",
+      payload: {
+        id: response.id,
+      },
+    });
   } catch (err) {
     console.error(err);
-    res.status(500).json({ error: "Server Error" });
+    res.status(500).json({
+      success: false,
+      message: "Server Error",
+    });
   }
 });
 
