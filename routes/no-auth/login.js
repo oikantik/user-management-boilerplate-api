@@ -4,6 +4,7 @@ const config = require("config");
 
 const router = express.Router();
 
+const { LoginValidation } = require("../../middleware/validator");
 const User = require("../../models/User");
 const secretJWT = config.get("secretJWT");
 
@@ -14,22 +15,26 @@ router.get("/", (req, res) => {
   });
 });
 
-router.post("/", async (req, res) => {
+router.post("/", LoginValidation, async (req, res) => {
   try {
     const { email, password } = req.body.data;
     const user = await User.findOne({ email });
+    if (!user)
+      return res.status(400).json({
+        success: false,
+        message: "Email or password is incorrect",
+      });
     const validate = await user.isValidPassword(password);
     if (!validate)
       return res.status(400).json({
         success: false,
-        message: "Unauthorized Access",
+        message: "Email or password is incorrect",
       });
     const token = jwt.sign({ id: user.id }, secretJWT, {
       expiresIn: "2d",
     });
-    console.log(token);
     res.status(200).json({
-      success: false,
+      success: true,
       message: "Login Successful",
       payload: {
         token,
