@@ -4,6 +4,7 @@ const morgan = require("morgan");
 const cors = require("cors");
 const bodyParser = require("body-parser");
 const passport = require("passport");
+const cookieParser = require("cookie-parser");
 
 const PORT = process.env.PORT || 5000;
 
@@ -20,6 +21,7 @@ const corsSettings = {
 app.use(bodyParser.json());
 app.use(morgan("dev"));
 app.use(cors(corsSettings));
+app.use(cookieParser());
 
 // Init passport
 app.use(passport.initialize());

@@ -6,6 +6,7 @@ const router = express.Router();
 
 const { LoginValidation } = require("../../middleware/validator");
 const User = require("../../models/User");
+const cookieExpiration = config.get("cookieExpiration");
 const secretJWT = config.get("secretJWT");
 
 router.get("/", (req, res) => {
@@ -33,16 +34,19 @@ router.post("/", LoginValidation, async (req, res) => {
     const token = jwt.sign({ id: user.id }, secretJWT, {
       expiresIn: "2d",
     });
-    res.status(200).json({
+    res.cookie("token", token, {
+      expires: new Date(Date.now() + cookieExpiration),
+      secure: false,
+      httpOnly: true,
+    });
+    return res.status(200).json({
       success: true,
       message: "Login Successful",
-      payload: {
-        token,
-      },
+      token,
     });
   } catch (err) {
     console.error(err);
-    res.status(500).json({
+    return res.status(500).json({
       success: false,
       message: "Server Error",
     });
