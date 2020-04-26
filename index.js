@@ -35,6 +35,7 @@ app.use("/register", require("./routes/no-auth/register"));
 
 // protected routes
 app.use("/members", require("./routes/auth/members"));
+app.use("/my-profile", require("./routes/auth/myProfile"));
 
 app.listen(PORT, () => {
   console.log(`Listening to port ${PORT}`);

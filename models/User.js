@@ -34,6 +34,21 @@ const UserSchema = new Schema({
   providerID: {
     type: String,
   },
+  aboutMe: {
+    type: String,
+  },
+  address: {
+    type: String,
+  },
+  phone: {
+    type: String,
+  },
+  website: {
+    type: String,
+  },
+  userRole: {
+    type: String,
+  },
   createdAt: {
     type: Date,
     default: new Date(),
