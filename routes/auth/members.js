@@ -16,7 +16,10 @@ router.get("/", (req, res, next) => {
         message: "User Not Found",
       });
     const countMembers = await User.estimatedDocumentCount();
-    const allMembers = await User.find({}, "name email dob gender");
+    const allMembers = await User.find(
+      {},
+      "name email dob gender address userRole website phone aboutMe"
+    );
     res.status(200).json({
       success: true,
       message: "Login Successful",
