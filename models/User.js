@@ -4,6 +4,7 @@ const bcrypt = require("bcrypt");
 const Schema = mongoose.Schema;
 
 mongoose.set("useCreateIndex", true);
+mongoose.set("useFindAndModify", false);
 
 const UserSchema = new Schema({
   name: {
