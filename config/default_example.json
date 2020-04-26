@@ -1,0 +1,6 @@
+{
+  "mongoURI": "mongodb+srv://username:password@url.mongodb.net/dbname",
+  "secretJWT": "Your Secret",
+  "saltRound": 10,
+  "cookieExpiration": 900000000
+}
