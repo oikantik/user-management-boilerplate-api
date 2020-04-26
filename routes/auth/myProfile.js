@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const passport = require("passport");
+const moment = require("moment");
 
 router.get("/", (req, res, next) => {
   passport.authenticate("jwt", async (err, user) => {
@@ -30,7 +31,7 @@ router.get("/", (req, res, next) => {
       message: "Login Successful",
       name,
       email,
-      dob,
+      dob: moment(dob).format("YYYY-MM-DD"),
       gender,
       aboutMe,
       address,

@@ -28,6 +28,11 @@ router.post("/", registrationValidation, async (req, res) => {
       gender,
       provider: "local-jwt",
       providerID: "",
+      aboutMe: "",
+      address: "",
+      website: "",
+      userRole: "",
+      phone: "",
     });
     const response = await user.save();
     res.status(200).json({
