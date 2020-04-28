@@ -100,4 +100,29 @@ module.exports = {
       });
     return next();
   },
+  getMemberProfileValidation: (req, res, next) => {
+    if (isObjEmpty(req.body))
+      return res.status(400).json({
+        success: false,
+        message: "Required fields are missing",
+      });
+    if (!req.body.hasOwnProperty("data"))
+      return res.status(400).json({
+        success: false,
+        message: "Required fields are missing",
+      });
+    if (!req.body.data.hasOwnProperty("memberEmail"))
+      return res.status(400).json({
+        success: false,
+        message: "Required fields are missing",
+      });
+    const { memberEmail } = req.body.data;
+    if (!validator.isEmail(memberEmail))
+      return res.status(400).json({
+        success: false,
+        message: "Invalid email address",
+      });
+
+    next();
+  },
 };
