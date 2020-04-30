@@ -68,13 +68,13 @@ module.exports = {
     next();
   },
   updateProfileValidation: (req, res, next) => {
-    if (isObjEmpty(req.body))
+    if (isObjEmpty(JSON.parse(JSON.stringify(req.body))))
       return res.status(400).json({
         success: false,
         message: "Required fields are missing",
       });
 
-    const { name, email, dob, gender } = req.body.data;
+    const { name, email, dob, gender } = req.body;
 
     if (validator.isEmpty(name))
       return res.status(400).json({

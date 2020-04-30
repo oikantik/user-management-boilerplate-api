@@ -50,6 +50,9 @@ const UserSchema = new Schema({
   userRole: {
     type: String,
   },
+  avatarUrl: {
+    type: String,
+  },
   createdAt: {
     type: Date,
     default: new Date(),

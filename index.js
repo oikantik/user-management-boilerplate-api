@@ -23,6 +23,7 @@ app.use(bodyParser.json());
 app.use(morgan("dev"));
 app.use(cors(corsSettings));
 app.use(cookieParser());
+app.use(express.static("uploads"));
 
 // Init passport
 app.use(passport.initialize());
