@@ -29,8 +29,9 @@ app.use(express.static("uploads"));
 app.use(passport.initialize());
 require("./passport/jwt")(passport);
 
-// login
+// login & logout
 app.use("/login", require("./routes/no-auth/login"));
+app.use("/logout", require("./routes/no-auth/logout"));
 // register
 app.use("/register", require("./routes/no-auth/register"));
 
