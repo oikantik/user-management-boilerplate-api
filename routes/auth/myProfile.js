@@ -3,22 +3,12 @@ const router = express.Router();
 const passport = require("passport");
 const moment = require("moment");
 const multer = require("multer");
-const { v1: uuidv1 } = require("uuid");
-const path = require("path");
 
 const User = require("../../models/User");
 const { updateProfileValidation } = require("../../middleware/validator");
 
-const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, "uploads/");
-  },
-  filename: function (req, file, cb) {
-    const fileName = uuidv1();
-    cb(null, fileName + path.extname(file.originalname));
-  },
-});
-
+const avatarStorage = require("../../utils/avatarStorage");
+const storage = multer.diskStorage(avatarStorage);
 const upload = multer({ storage });
 
 router.get("/", (req, res, next) => {
@@ -79,7 +69,12 @@ router.post(
           success: false,
           message: "User Not Found",
         });
-      const avatarUrl = fileName !== "" ? fileName : user.avatarUrl;
+      const avatarUrl =
+        fileName !== ""
+          ? fileName
+          : typeof user.avatarUrl !== "undefined"
+          ? user.avatarUrl
+          : "";
       const {
         name,
         email,
