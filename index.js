@@ -34,6 +34,8 @@ app.use("/login", require("./routes/no-auth/login"));
 app.use("/logout", require("./routes/no-auth/logout"));
 // register
 app.use("/register", require("./routes/no-auth/register"));
+// public signup for scheduling
+app.use("/public", require("./routes/no-auth/schedule"));
 
 // protected routes
 app.use("/members", require("./routes/auth/members"));
