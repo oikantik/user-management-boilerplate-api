@@ -16,9 +16,15 @@ router.get("/", (req, res, next) => {
         success: false,
         message: "User Not Found",
       });
+
+    const response = await EventModel.find({ user }).select(
+      "title editorId createdAt eventId"
+    );
+
     return res.status(200).json({
       success: true,
       message: "route for creating events",
+      events: response,
     });
   })(req, res, next);
 });
