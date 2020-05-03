@@ -53,4 +53,52 @@ router.post("/create", (req, res, next) => {
   })(req, res, next);
 });
 
+router.post("/get-one/details", (req, res, next) => {
+  passport.authenticate("jwt", async (err, user) => {
+    if (err)
+      return res.status(400).json({
+        success: false,
+        message: "Unauthorized Access",
+      });
+    if (!user)
+      return res.status(400).json({
+        success: false,
+        message: "User Not Found",
+      });
+    const { editorId } = req.body.data;
+    const response = await EventModel.findOne({ editorId });
+    return res.status(200).json({
+      success: true,
+      message: "route for creating events",
+      event: response,
+    });
+  })(req, res, next);
+});
+
+router.post("/update/details", (req, res, next) => {
+  passport.authenticate("jwt", async (err, user) => {
+    if (err)
+      return res.status(400).json({
+        success: false,
+        message: "Unauthorized Access",
+      });
+    if (!user)
+      return res.status(400).json({
+        success: false,
+        message: "User Not Found",
+      });
+    const { title, description, eventId, editorId } = req.body.data;
+    const response = await EventModel.findOneAndUpdate(
+      { editorId },
+      { title, description, eventId },
+      { new: true }
+    );
+    return res.status(200).json({
+      success: true,
+      message: "route for creating events",
+      event: response,
+    });
+  })(req, res, next);
+});
+
 module.exports = router;
