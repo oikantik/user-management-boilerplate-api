@@ -107,4 +107,87 @@ router.post("/update/details", (req, res, next) => {
   })(req, res, next);
 });
 
+router.post("/update/schedule", (req, res, next) => {
+  passport.authenticate("jwt", async (err, user) => {
+    if (err)
+      return res.status(400).json({
+        success: false,
+        message: "Unauthorized Access",
+      });
+    if (!user)
+      return res.status(400).json({
+        success: false,
+        message: "User Not Found",
+      });
+    const {
+      startDate,
+      endDate,
+      timezone,
+      meetingLength,
+      spreadLength,
+      blackoutDate,
+      monday,
+      tuesday,
+      wednesday,
+      thursday,
+      friday,
+      saturday,
+      sunday,
+      editorId,
+    } = req.body.data;
+    const response = await EventModel.findOneAndUpdate(
+      { editorId },
+      {
+        startDate,
+        endDate,
+        timezone,
+        meetingLength,
+        spreadLength,
+        blackoutDate,
+        availableDays: {
+          monday,
+          tuesday,
+          wednesday,
+          thursday,
+          friday,
+          saturday,
+          sunday,
+        },
+      },
+      { new: true }
+    );
+    console.log(req.body.data);
+    console.log(response);
+    return res.status(200).json({
+      success: true,
+      message: "route for creating events",
+      event: response,
+    });
+  })(req, res, next);
+});
+
+router.post("/get-one/schedule", (req, res, next) => {
+  passport.authenticate("jwt", async (err, user) => {
+    if (err)
+      return res.status(400).json({
+        success: false,
+        message: "Unauthorized Access",
+      });
+    if (!user)
+      return res.status(400).json({
+        success: false,
+        message: "User Not Found",
+      });
+    const { editorId } = req.body.data;
+    const response = await EventModel.findOne({ editorId }).populate(
+      "-id -title -description -user"
+    );
+    return res.status(200).json({
+      success: true,
+      message: "route for creating events",
+      event: response,
+    });
+  })(req, res, next);
+});
+
 module.exports = router;
