@@ -25,6 +25,7 @@ router.post("/schedule", async (req, res) => {
       friday: response.availableDays.friday,
       saturday: response.availableDays.saturday,
       sunday: response.availableDays.sunday,
+      formFields: response.formFields,
     },
   });
 });
